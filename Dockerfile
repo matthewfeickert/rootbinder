@@ -9,8 +9,8 @@ SHELL [ "/bin/bash", "-c" ]
 RUN apt-get update && \
     apt-get upgrade -qq -y && \
     apt-get install -qq -y python-pip && \
-    pip install --upgrade pip setuptools wheel && \
-    pip install \
+    sudo -H pip install --upgrade pip setuptools wheel && \
+    sudo -H pip install \
        jupyter \
        metakernel \
        zmq && \
