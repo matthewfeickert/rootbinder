@@ -3,6 +3,8 @@ FROM rootproject/root-ubuntu16
 # Run the following commands as super user (root):
 USER root
 
+SHELL [ "/bin/bash", "-c" ]
+
 # Install required packages for notebooks
 RUN apt-get update && \
     apt-get upgrade -qq -y && \
