@@ -8,16 +8,16 @@ SHELL [ "/bin/bash", "-c" ]
 # Install required packages for notebooks
 RUN apt-get update && \
     apt-get upgrade -qq -y && \
-    apt-get install -qq -y python-pip && \
-    sudo -H pip install --upgrade pip setuptools wheel && \
+    apt-get install -qq -y \
+        python-pip \
+        wget \
+        git
+RUN sudo -H pip install --upgrade pip setuptools wheel && \
     sudo -H pip install \
        jupyter \
        metakernel \
        zmq && \
     rm -rf /var/lib/apt/lists/*
-
-# Install xrootd
-RUN sudo build/unix/installXrootd.sh /opt/xrootd
 
 # Create a user that does not have root privileges
 ARG username=physicist
