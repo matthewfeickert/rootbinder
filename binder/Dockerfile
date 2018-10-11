@@ -1,5 +1,4 @@
-
-FROM andrewosh/binder-base
+FROM rootproject/root-ubuntu16
 
 MAINTAINER Enric Tejedor Saavedra <enric.tejedor.saavedra@cern.ch>
 
@@ -12,7 +11,7 @@ RUN apt-get install -y \
     libxext6 \
     libxft2 \
     libxpm4
-    
+
 # Install ROOT additional libraries
 RUN apt-get install -y \
     r-base \
@@ -21,14 +20,8 @@ RUN apt-get install -y \
 # Install R packages
 RUN R -e "install.packages(c('Rcpp','RInside'), repos = \"http://cran.case.edu\")"
 
-# Download and install ROOT master
-WORKDIR /opt
-RUN wget http://root.cern.ch/notebooks/rootbinderdata/root.tar.gz 
-RUN tar xzf root.tar.gz
-RUN rm root.tar.gz
-
 # Download and install Fastjet
-RUN wget http://root.cern.ch/notebooks/rootbinderdata/fastjet.tar.gz 
+RUN wget http://root.cern.ch/notebooks/rootbinderdata/fastjet.tar.gz
 RUN tar xzf fastjet.tar.gz
 RUN rm fastjet.tar.gz
 
