@@ -1,4 +1,4 @@
-FROM rootproject/root-ubuntu16
+FROM rootproject/root-ubuntu16:b16855622aac
 
 # Run the following commands as super user (root):
 USER root
@@ -19,21 +19,21 @@ RUN sudo -H pip install --upgrade pip setuptools wheel && \
        zmq && \
     rm -rf /var/lib/apt/lists/*
 
-# Create a user that does not have root privileges
-ARG username=physicist
-RUN userdel builder && useradd --create-home --home-dir /home/${username} ${username}
-ENV HOME /home/${username}
+# c.f. https://mybinder.readthedocs.io/en/latest/tutorials/dockerfile.html#preparing-your-dockerfile
+ENV NB_USER jovyan
+ENV NB_UID 1000
+ENV HOME /home/${NB_USER}
 
-WORKDIR /home/${username}
+RUN adduser --disabled-password \
+    --gecos "Default user" \
+    --uid ${NB_UID} \
+    ${NB_USER}
 
-# Create the configuration file for jupyter and set owner
-RUN echo "c.NotebookApp.ip = '*'" > jupyter_notebook_config.py && chown ${username} *
+# Make sure the contents of the repo are in ${HOME}
+COPY . ${HOME}
+USER root
+RUN chown -R ${NB_UID} ${HOME}
+USER ${NB_USER}
 
-# Switch to our newly created user
-USER ${username}
-
-# Allow incoming connections on port 8888
-EXPOSE 8888
-
-# Start ROOT with the --notebook flag to fire up the container
-CMD ["root", "--notebook"]
+# Specify the default command to run
+CMD ["jupyter", "notebook", "--ip", "0.0.0.0"]
