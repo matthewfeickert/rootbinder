@@ -5,8 +5,9 @@ MAINTAINER Enric Tejedor Saavedra <enric.tejedor.saavedra@cern.ch>
 USER root
 
 # Install ROOT prerequisites
-RUN apt-get update
-RUN apt-get install -y \
+RUN apt-get update && \
+    apt-get upgrade && \
+    apt-get install -y \
     libx11-6 \
     libxext6 \
     libxft2 \
@@ -22,9 +23,9 @@ RUN apt-get install -y \
 RUN R -e "install.packages(c('Rcpp','RInside'), repos='http://cran.us.r-project.org')"
 
 # Download and install Fastjet
-RUN wget http://root.cern.ch/notebooks/rootbinderdata/fastjet.tar.gz
-RUN tar xzf fastjet.tar.gz
-RUN rm fastjet.tar.gz
+RUN wget http://root.cern.ch/notebooks/rootbinderdata/fastjet.tar.gz && \
+    tar xzf fastjet.tar.gz && \
+    rm fastjet.tar.gz
 
 USER main
 
