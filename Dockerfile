@@ -16,6 +16,9 @@ RUN apt-get update && \
        zmq && \
     rm -rf /var/lib/apt/lists/*
 
+# Install xrootd
+RUN sudo build/unix/installXrootd.sh /opt/xrootd
+
 # Create a user that does not have root privileges
 ARG username=physicist
 RUN userdel builder && useradd --create-home --home-dir /home/${username} ${username}
