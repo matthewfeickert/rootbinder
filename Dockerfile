@@ -1,7 +1,6 @@
 FROM rootproject/root-ubuntu16
 
-# Run the following commands as super user (root):
-USER root
+SHELL [ "/bin/bash", "-c" ]
 
 # Install required packages for notebooks
 RUN apt-get update && \
@@ -11,8 +10,10 @@ RUN apt-get update && \
     pip install \
        jupyter \
        metakernel \
-       zmq && \
-    rm -rf /var/lib/apt/lists/*
+       zmq
+
+# Run the following commands as super user (root):
+USER root
 
 # Create a user that does not have root privileges
 ARG username=physicist
