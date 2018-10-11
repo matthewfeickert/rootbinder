@@ -10,7 +10,8 @@ RUN apt-get install -y \
     libx11-6 \
     libxext6 \
     libxft2 \
-    libxpm4
+    libxpm4 \
+    wget
 
 # Install ROOT additional libraries
 RUN apt-get install -y \
