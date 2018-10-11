@@ -23,10 +23,6 @@ ENV HOME /home/${username}
 
 WORKDIR /home/${username}
 
-# Add some example notebooks
-ADD http://root.cern.ch/doc/master/notebooks/mp201_parallelHistoFill.C.nbconvert.ipynb mp201_parallelHistoFill.C.nbconvert.ipynb
-ADD http://root.cern.ch/doc/master/notebooks/tdf007_snapshot.py.nbconvert.ipynb tdf007_snapshot.py.nbconvert.ipynb
-
 # Create the configuration file for jupyter and set owner
 RUN echo "c.NotebookApp.ip = '*'" > jupyter_notebook_config.py && chown ${username} *
 
