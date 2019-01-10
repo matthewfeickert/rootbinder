@@ -11,9 +11,12 @@ RUN apt-get update && \
     apt-get install -qq -y \
         python-pip \
         wget \
-        git
-RUN sudo -H pip install --upgrade pip setuptools wheel && \
-    sudo -H pip install \
+        git && \
+    apt-get -y autoclean && \
+    apt-get -y autoremove
+# Use sudo -H pip instead of pip install --user as jupyter will be called later by USER jovyan
+RUN sudo -H pip install --upgrade --no-cache-dir pip setuptools wheel && \
+    sudo -H pip install --no-cache-dir \
        jupyter \
        metakernel \
        zmq && \
